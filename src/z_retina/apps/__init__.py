@@ -1,0 +1,1 @@
+"""Poetry console script entrypoints."""

@@ -1,0 +1,86 @@
+# Default training config. Override paths for your machine.
+# Install: poetry install
+# Train:    poetry run z-retina-train --config configs/default.yaml
+
+experiment: "demo_caformer_b36"
+
+dataset_root: "./data/eyes_all"
+images_root: "./data/eyes/dataset"
+merged_json: "./data/merged.json"
+cache_root: "./cache"
+run_dir: "./runs/demo_caformer_b36"
+
+split_json: "./splits/patient_split.json"
+auto_generate_patient_split: true
+# "research" = same as new_eyes: dHash (+ optional ORB) + MultilabelStratifiedShuffleSplit.
+# "group_shuffle" = alternative: pHash + Frangi/ORB + GroupShuffleSplit.
+patient_split_backend: "research"
+train_ratio: 0.7
+val_ratio: 0.1
+test_ratio: 0.2
+strict_patient_id: false
+infer_similarity_for_missing_ids: true
+hash_hamming_threshold: 8
+bucket_prefix_bits: 16
+max_pairs_per_bucket: 5000
+use_orb_verify: false
+orb_hamming_gate: 14
+orb_inliers_threshold: 25
+patient_id_keys:
+  - "patient_id"
+  - "patient"
+  - "patientId"
+  - "subject_id"
+  - "subjectId"
+  - "person_id"
+  - "case_id"
+patient_id_regex: null
+
+n_channels: 3
+backbone: "caformer_b36"
+num_classes: 15
+drop_path_rate: 0.2
+timm_pretrained: true
+
+input_size: 224
+batch_size: 4
+grad_accumulation: 16
+total_epochs: 35
+num_workers: 2
+val_num_workers: 0
+prefetch_factor: 2
+use_cache: true
+
+lr: 0.0001
+weight_decay: 0.0001
+betas: [0.9, 0.999]
+warmup_epochs: 3
+min_lr: 0.0000001
+
+grad_checkpointing: true
+precision: "bf16"
+
+asl_gamma_neg: 4.0
+asl_gamma_pos: 0.0
+asl_clip: 0.05
+asl_pos_weight: true
+
+mixup_prob: 0.10
+cutmix_prob: 0.10
+mixup_alpha: 0.4
+cutmix_alpha: 1.0
+
+phase1_epochs: 5
+phase2_epochs: 10
+phase2_blocks: 6
+
+use_ema: true
+ema_decay: 0.9998
+
+seed: 42
+log_interval: 20
+save_top_k: 2
+best_metric: "val_mAP"
+
+resume_checkpoint: null
+resume_optimizer: true
