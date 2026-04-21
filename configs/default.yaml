@@ -1,4 +1,5 @@
 # Default training config. Override paths for your machine.
+# Optional local weights (gitignored): checkpoints/best.pth
 # Install: poetry install
 # Train:    poetry run z-retina-train --config configs/default.yaml
 

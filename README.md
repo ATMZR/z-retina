@@ -13,6 +13,10 @@ poetry install
 
 (Optional dev tools: `pytest`, Jupyter.)
 
+## Local weights (not in Git)
+
+If you copied **`checkpoints/best.pth`** locally (~1.1 GB), use it for eval; the whole **`checkpoints/`** directory is **gitignored** — do not commit weights.
+
 ## Train
 
 Edit paths in `configs/default.yaml`, then:
@@ -33,7 +37,7 @@ If `split_json` is missing and `auto_generate_patient_split: true`, the chosen b
 ## Evaluate (Table S1 protocol)
 
 ```bash
-poetry run z-retina-eval --config configs/default.yaml --checkpoint runs/demo_caformer_b36/best.pth --table_s1
+poetry run z-retina-eval --config configs/default.yaml --checkpoint checkpoints/best.pth --table_s1
 ```
 
 Optional: `--no_tta`, `--out_json metrics.json`.
@@ -51,6 +55,7 @@ Use `--backend group_shuffle` for the pHash variant. `--no_infer` skips similari
 ## Project layout
 
 ```
+checkpoints/             # optional local .pth (gitignored — do not commit)
 configs/default.yaml     # training / paths / patient_split_backend
 src/z_retina/
   dataset.py             # EyeDataset, preprocessing, augmentations

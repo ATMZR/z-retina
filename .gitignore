@@ -11,5 +11,6 @@ build/
 .cache/
 cache/
 runs/
+checkpoints/
 *.pth
 .ipynb_checkpoints/
